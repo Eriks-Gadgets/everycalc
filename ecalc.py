@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 print("everyCalc event log")
 sg.theme("DefaultNoMoreNagging")
 loading_window = sg.Popup("everyCalc\n© Erik's Gadgets, 2023")
-window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
+window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Count")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
 
 while True:
     event, values = window.read()
@@ -14,7 +14,11 @@ while True:
         window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Default")],[sg.Button("Input-Based")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))
     if event == "Return [1]":
         window.close()
-        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
+        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Count")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
+    if event == "Count":
+        window.close()
+        window = sg.Window(title="Count", layout=[[sg.Text("everyCalc")],[sg.Input()],[sg.Button("Count!")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]])
+        calctype = 5
     if event == "Conversion Calculator":
         window.close()
         window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Decimal to Octal")],[sg.Button("Decimal to Hexadecimal")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))
@@ -26,6 +30,29 @@ while True:
         window.close()
         window = sg.Window(title="Decimal to Hexadecimal [Conversion]", layout=[[sg.Text("everyCalc")],[sg.Input()],[sg.Button("Convert!")],[sg.Button("Return [3]")],[sg.Text("© Erik's Gadgets")]])
         calctype = 4
+    if event == "Count!":
+        if calctype == 5:
+            text = values[0]
+            logged = {}
+            output = "Count of " + text + ":\n"
+            for i in text:
+                if i in logged:
+                    logged[i] += 1
+                else:
+                    logged[i] = 1
+            for i in logged:
+                if output == "":
+                    output += i
+                    output += ":"
+                    output += str(logged[i])
+                    output += "\n"
+                else:
+                    output += i
+                    output += ":"
+                    output += str(logged[i])
+                    output += "\n"
+            output += "\nTotal Length: " + str(len(text)) + "\nUnique Characters: " + str(len(logged))
+            sg.Popup(output)
     if event == "Convert!":
         if calctype == 3:
             do1 = oct(int(values[0]))

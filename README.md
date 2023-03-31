@@ -1,4 +1,4 @@
-# everycalc
+# everyCalc
 Takes in various inputs [GUI Environment] and outputs them. There are three Options:
 1) Input-Based [input someting, the evaluated solution of it is outputted]
 2) Default [press buttons, make equations, get them solved]

@@ -1,20 +1,43 @@
 import PySimpleGUI as sg
+import random
 print("everyCalc event log")
 sg.theme("DefaultNoMoreNagging")
 loading_window = sg.Popup("everyCalc\n© Erik's Gadgets, 2023")
-window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Count")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
+window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Count")],[sg.Button("Randomizer")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
 
 while True:
     event, values = window.read()
     print(event)
     if event == sg.WIN_CLOSED or event == "Exit":
         break
+    if event == "Randomizer":
+        window.close()
+        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Random Numbers")],[sg.Button("Coin-Flip")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))
     if event == "Basic Calculator":
         window.close()
         window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Default")],[sg.Button("Input-Based")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))
+    if event == "Coin-Flip":
+        possible_outcomes = ["Tails", "Heads", "Side"]
+        num = random.randint(1, 1001)
+        if num >= 500 and num != 1001: #Landed on Heads
+            sg.Popup(possible_outcomes[1])
+            print(num)
+            print("Heads")
+        if num < 500 and num != 1001: #Landed on Tails
+            sg.Popup(possible_outcomes[0])
+            print(num)
+            print("Tails")
+        if num == 1001: #Landed on Side [very rare]
+            sg.Popup(possible_outcomes[2])
+            print(num)
+            print("Side")
+    if event == "Random Numbers":
+        window.close()
+        calctype = 6
+        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Text("Minimum"), sg.Input()],[sg.Text("Maximum"), sg.Input()],[sg.Button("=")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))
     if event == "Return [1]":
         window.close()
-        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Count")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
+        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Basic Calculator")],[sg.Button("Conversion Calculator")],[sg.Button("Count")],[sg.Button("Randomizer")],[sg.Button("Exit")],[sg.Text("© Erik's Gadgets")]], margins=(100, 50))
     if event == "Count":
         window.close()
         window = sg.Window(title="Count", layout=[[sg.Text("everyCalc")],[sg.Input()],[sg.Button("Count!")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]])
@@ -85,6 +108,9 @@ while True:
             sg.Popup("Your Answer Is: " + str(eval(values[0])) + "\n" + str(values[0]) + " = " + str(eval(values[0])))
         if calctype == 2:
             sg.Popup("Your Answer Is: " + str(eval(equation)) + "\n" + str(equation) + " = " + str(eval(equation)))
+        if calctype == 6:
+            me = random.randint(int(values[0]), int(values[1]))
+            sg.Popup("Your Random Number Is: " + str(me))
     if event == "Return [3]":
         window.close()
         window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Decimal to Octal")],[sg.Button("Decimal to Hexadecimal")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))

@@ -44,7 +44,7 @@ while True:
         calctype = 5
     if event == "Conversion Calculator":
         window.close()
-        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Decimal to Octal")],[sg.Button("Decimal to Hexadecimal")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))
+        window = sg.Window(title="Menu", layout=[[sg.Text("everyCalc")],[sg.Button("Decimal to Octal")],[sg.Button("Decimal to Hexadecimal")],[sg.Button("Decimal to Binary")],[sg.Button("Return [1]")],[sg.Text("© Erik's Gadgets")]],margins=(100, 50))
     if event == "Decimal to Octal":
         window.close()
         window = sg.Window(title="Decimal to Octal [Conversion]", layout=[[sg.Text("everyCalc")],[sg.Input()],[sg.Button("Convert!")],[sg.Button("Return [3]")],[sg.Text("© Erik's Gadgets")]])
@@ -58,6 +58,13 @@ while True:
             text = values[0]
             logged = {}
             output = "Count of " + text + ":\n"
+            words = 1
+            sentences = 1
+            for i in text:
+                if i == " ":
+                    words += 1
+                if i == "." or i == "?" or i == "!" and i != text[-1]:
+                    sentences += 1
             for i in text:
                 if i in logged:
                     logged[i] += 1
@@ -74,7 +81,7 @@ while True:
                     output += ":"
                     output += str(logged[i])
                     output += "\n"
-            output += "\nTotal Length: " + str(len(text)) + "\nUnique Characters: " + str(len(logged))
+            output += "\nTotal Length: " + str(len(text)) + "\nUnique Characters: " + str(len(logged)) + "\nWords: " + str(words) + "\nSentences: " + str(sentences)
             sg.Popup(output)
     if event == "Convert!":
         if calctype == 3:
